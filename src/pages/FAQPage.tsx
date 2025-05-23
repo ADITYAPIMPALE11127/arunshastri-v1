@@ -10,7 +10,25 @@ interface FAQItem {
 
 const FAQPage: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  
+  const paymentFaqs: FAQItem[] = [
+  {
+    question: "What payment methods are accepted?",
+    answer: "We use Razorpay as our secure payment gateway, which supports UPI, credit/debit cards, net banking, and popular wallets like Paytm and PhonePe."
+  },
+  {
+    question: "Is my payment information secure?",
+    answer: "Yes, all transactions are processed via Razorpay, which uses industry-grade security and encryption to protect your payment details. We do not store any card or bank information on our servers."
+  },
+  {
+    question: "What should I do if my payment fails?",
+    answer: "If your payment fails, please try again or use an alternate payment method. If the amount is deducted but the order isn't confirmed, email us at support@astroarunpandit.org with your payment reference number."
+  },
+  {
+    question: "Can I get a receipt for my payment?",
+    answer: "Yes, you will receive an email receipt from Razorpay immediately after a successful transaction. If you do not receive it, please contact support with your payment details."
+  }
+];
+
   const faqs: FAQItem[] = [
     {
       question: "How accurate is the Fortune Report?",
@@ -84,7 +102,33 @@ const FAQPage: React.FC = () => {
                 </div>
               ))}
             </div>
-            
+          <h2 className="text-2xl font-semibold mt-12 mb-6 text-center">Payment & Refunds</h2>
+<div className="bg-white rounded-lg shadow-md overflow-hidden">
+  {paymentFaqs.map((faq, index) => (
+    <div key={index} className="border-b border-gray-200 last:border-b-0">
+      <button
+        className="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none"
+        onClick={() => toggleFAQ(index + faqs.length)} // ensure index is unique
+      >
+        <span className="font-medium text-lg">{faq.question}</span>
+        {openIndex === index + faqs.length ? (
+          <ChevronUp className="h-5 w-5 text-indigo-600" />
+        ) : (
+          <ChevronDown className="h-5 w-5 text-indigo-600" />
+        )}
+      </button>
+      
+      <div 
+        className={`px-6 overflow-hidden transition-all duration-300 ${
+          openIndex === index + faqs.length ? 'max-h-96 py-4' : 'max-h-0 py-0'
+        }`}
+      >
+        <p className="text-gray-600">{faq.answer}</p>
+      </div>
+    </div>
+  ))}
+</div>
+  
             <div className="mt-12 text-center">
               <p className="text-lg mb-4">Still have questions?</p>
               <a 
