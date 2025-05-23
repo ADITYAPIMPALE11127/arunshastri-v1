@@ -4,10 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import UserForm from '../components/UserForm';
 import { UserFormData } from '../types';
-import { initiatePayment } from '../services/paymentService';
 import { saveUserData } from '../services/firestore';
-import { sendConfirmationEmail } from '../services/emailService';
-import { saveToGoogleSheets } from '../services/googleSheets';
 
 const OrderPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,25 +16,10 @@ const OrderPage: React.FC = () => {
     setError(null);
     
     try {
-      // 1. Initiate Razorpay payment
-      const paymentId = await initiatePayment(formData);
+      // Save data to Firebase
+      await saveUserData(formData);
       
-      // 2. Update form data with payment ID
-      const completeData = {
-        ...formData,
-        paymentId
-      };
-      
-      // 3. Save data to Firebase
-      await saveUserData(completeData);
-      
-      // 4. Save data to Google Sheets
-      await saveToGoogleSheets(completeData);
-      
-      // 5. Send confirmation email
-      await sendConfirmationEmail(completeData);
-      
-      // 6. Navigate to thank you page
+      // Navigate to thank you page
       navigate('/thank-you');
     } catch (err) {
       console.error('Error processing order:', err);
