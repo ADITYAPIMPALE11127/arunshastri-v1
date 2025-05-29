@@ -22,7 +22,6 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
   };
 
   const onFormSubmit = async (data: UserFormData) => {
-    // console.log('Razorpay Key:', import.meta.env.VITE_RAZORPAY_KEY_ID);
     const isTimeValid = validateTime(data.timeOfBirth);
     if (isTimeValid !== true) {
       setTimeError(isTimeValid);
@@ -34,7 +33,7 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
 
     try {
       // Create order on backend
-      const response = await fetch('/razorpay/orders', {
+      const response = await fetch('https://razorpay-service-piug.onrender.com/razorpay/orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -79,7 +78,7 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
         handler: async function (response: any) {
           try {
             // Save user data after successful payment
-            const saveResponse = await fetch('/razorpay/saveUserData', {
+            const saveResponse = await fetch('https://razorpay-service-piug.onrender.com/razorpay/saveUserData', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
