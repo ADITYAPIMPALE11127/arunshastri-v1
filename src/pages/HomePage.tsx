@@ -31,7 +31,7 @@ const HomePage: React.FC = () => {
               to="/order"
               className="inline-block px-8 py-4 bg-yellow-500 text-indigo-900 font-bold rounded-md hover:bg-yellow-400 transition-colors text-lg"
             >
-              Get Full Report – ₹1299
+              Get Full Report – ₹99
             </Link>
           </div>
         </section>
@@ -99,12 +99,12 @@ const HomePage: React.FC = () => {
                     <span>Specializes in remedial astrology and life path guidance</span>
                   </li>
                 </ul>
-                <Link
-                  to="/order"
-                  className="inline-block px-6 py-3 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 transition-colors"
-                >
-                  Get Your Personalized Report
-                </Link>
+            <Link
+              to="/order"
+              className="inline-block px-6 py-3 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 transition-colors"
+            >
+              Get Your Personalized Report – ₹99
+            </Link>
               </div>
             </div>
           </div>
@@ -152,7 +152,7 @@ const HomePage: React.FC = () => {
               to="/order"
               className="inline-block px-8 py-4 bg-yellow-500 text-indigo-900 font-bold rounded-md hover:bg-yellow-400 transition-colors text-lg"
             >
-              Get Full Report – ₹1299
+              Get Full Report – ₹99
             </Link>
           </div>
         </section>

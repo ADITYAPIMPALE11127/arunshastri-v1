@@ -4,7 +4,7 @@ import DatePicker from 'react-datepicker';
 import { toast } from 'react-toastify';
 import 'react-datepicker/dist/react-datepicker.css';
 import { UserFormData } from '../types';
-import { saveUserDataToRTDB } from '../services/realtimeDB';
+import { useNavigate } from 'react-router-dom';
 
 interface UserFormProps {
   onSubmit: (data: UserFormData) => void;
@@ -14,6 +14,7 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
   const { register, handleSubmit, control, formState: { errors } } = useForm<UserFormData>();
   const [timeError, setTimeError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   const validateTime = (time: string) => {
     const timeRegex = /^([01]?[0-9]|2[0-3]):([0-5][0-9])$/;
@@ -21,6 +22,7 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
   };
 
   const onFormSubmit = async (data: UserFormData) => {
+    // console.log('Razorpay Key:', import.meta.env.VITE_RAZORPAY_KEY_ID);
     const isTimeValid = validateTime(data.timeOfBirth);
     if (isTimeValid !== true) {
       setTimeError(isTimeValid);
@@ -31,14 +33,90 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
     setSubmitting(true);
 
     try {
-      const rtdbId = await saveUserDataToRTDB(data);
-      console.log('User saved to RTDB with ID:', rtdbId);
-      toast.success('Form submitted successfully!');
-      onSubmit(data);
+      // Create order on backend
+      const response = await fetch('/razorpay/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ amount: 9900 }) // amount in paise
+      });
+
+      if (!response.ok) {
+        toast.error('Failed to create payment order. Please try again.');
+        setSubmitting(false);
+        return;
+      }
+
+      const orderData = await response.json();
+
+      // Display Razorpay payment modal with handler to save user data after payment success
+      const res = await new Promise((resolve) => {
+        const script = document.createElement('script');
+        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+        script.onload = () => {
+          resolve(true);
+        };
+        script.onerror = () => {
+          resolve(false);
+        };
+        document.body.appendChild(script);
+      });
+
+      if (!res) {
+        toast.error('Razorpay SDK failed to load. Are you online?');
+        setSubmitting(false);
+        return;
+      }
+
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID || '',
+        amount: 9900,
+        currency: 'INR',
+        name: 'Your Company Name',
+        description: 'Payment for Astrology Report',
+        order_id: orderData.order_id,
+        handler: async function (response: any) {
+          try {
+            // Save user data after successful payment
+            const saveResponse = await fetch('/razorpay/saveUserData', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+            });
+            if (!saveResponse.ok) {
+              toast.error('Payment succeeded but failed to save user data.');
+              setSubmitting(false);
+              return;
+            }
+            toast.success('Payment successful and user data saved!');
+            onSubmit(data);
+            // Redirect to Thank You page
+            navigate('/thank-you');
+          } catch (error) {
+            console.error('Error saving user data after payment:', error);
+            toast.error('Payment succeeded but error occurred saving user data.');
+          } finally {
+            setSubmitting(false);
+          }
+        },
+        prefill: {
+          email: data.email,
+          name: data.fullName,
+        },
+        theme: {
+          color: '#3399cc'
+        }
+      };
+
+      const paymentObject = new (window as any).Razorpay(options);
+      paymentObject.open();
+
     } catch (error) {
-      console.error('Error saving user:', error);
-      toast.error('Failed to submit form. Please try again.');
-    } finally {
+      console.error('Error processing payment:', error);
+      toast.error('Failed to process payment. Please try again.');
       setSubmitting(false);
     }
   };
@@ -218,7 +296,7 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
               : 'bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
           }`}
         >
-          {submitting ? 'Submitting...' : 'Proceed to Payment - ₹1299'}
+          {submitting ? 'Submitting...' : 'Proceed to Payment - ₹99'}
         </button>
       </div>
     </form>
