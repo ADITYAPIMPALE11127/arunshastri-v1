@@ -16,15 +16,65 @@ const OrderPage: React.FC = () => {
     setError(null);
     
     try {
-      // Save data to Firebase
-      await saveUserData(formData);
+      // Create Razorpay order
+      const orderResponse = await fetch('/razorpay/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ amount: 9900 }) // ₹99 in paise
+      });
+
+      if (!orderResponse.ok) {
+        throw new Error('Failed to create payment order');
+      }
+
+      const orderData = await orderResponse.json();
+
+      // Initialize Razorpay
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: "ArunShashtri",
+        description: "Fortune Report Plus",
+        order_id: orderData.order_id,
+        handler: async function(response: any) {
+          try {
+            // Save user data after successful payment
+            await saveUserData({
+              ...formData,
+              paymentId: response.razorpay_payment_id,
+              orderId: response.razorpay_order_id
+            });
+            navigate('/thank-you');
+          } catch (error) {
+            console.error('Error saving user data:', error);
+            navigate('/payment-failed');
+          }
+        },
+        prefill: {
+          name: formData.fullName,
+          email: formData.email,
+          contact: formData.whatsappNumber
+        },
+        modal: {
+          ondismiss: function() {
+            setIsLoading(false);
+            navigate('/payment-cancelled');
+          }
+        },
+        theme: {
+          color: "#4338CA"
+        }
+      };
+
+      const paymentObject = new (window as any).Razorpay(options);
+      paymentObject.open();
       
-      // Navigate to thank you page
-      navigate('/thank-you');
     } catch (err) {
       console.error('Error processing order:', err);
-      setError('There was an error processing your order. Please try again or contact support.');
-    } finally {
+      setError('There was an error processing your order. Please try again.');
       setIsLoading(false);
     }
   };
