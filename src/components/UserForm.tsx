@@ -32,86 +32,89 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
     setSubmitting(true);
 
     try {
-      // Create order on backend
-      const response = await fetch('https://razorpay-service-piug.onrender.com/razorpay/orders', {
+      // Load Razorpay SDK
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      document.body.appendChild(script);
+
+      // Wait for script to load
+      await new Promise((resolve) => {
+        script.onload = resolve;
+      });
+
+      // Create order
+      const orderResponse = await fetch('https://razorpay-service-piug.onrender.com/razorpay/orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ amount: 9900 }) // amount in paise
+        body: JSON.stringify({ amount: 9900 }) // ₹99 in paise
       });
 
-      if (!response.ok) {
-        toast.error('Failed to create payment order. Please try again.');
-        setSubmitting(false);
-        return;
+      if (!orderResponse.ok) {
+        throw new Error('Failed to create order');
       }
 
-      const orderData = await response.json();
+      const orderData = await orderResponse.json();
 
-      // Display Razorpay payment modal with handler to save user data after payment success
-      const res = await new Promise((resolve) => {
-        const script = document.createElement('script');
-        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-        script.onload = () => {
-          resolve(true);
-        };
-        script.onerror = () => {
-          resolve(false);
-        };
-        document.body.appendChild(script);
-      });
-
-      if (!res) {
-        toast.error('Razorpay SDK failed to load. Are you online?');
-        setSubmitting(false);
-        return;
-      }
-
+      // Initialize Razorpay
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID || '',
-        amount: 9900,
-        currency: 'INR',
-        name: 'Your Company Name',
-        description: 'Payment for Astrology Report',
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        amount: orderData.amount,
+        currency: "INR",
+        name: "ArunShashtri",
+        description: "Fortune Report Plus",
         order_id: orderData.order_id,
-        handler: async function (response: any) {
+        handler: async function(response: any) {
           try {
-            // Save user data after successful payment
-            const saveResponse = await fetch('https://razorpay-service-piug.onrender.com/razorpay/saveUserData', {
+            // Verify payment
+            const verifyResponse = await fetch('https://razorpay-service-piug.onrender.com/razorpay/verify', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
               },
-              body: JSON.stringify(data)
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature
+              })
             });
-            if (!saveResponse.ok) {
-              toast.error('Payment succeeded but failed to save user data.');
-              setSubmitting(false);
-              return;
+
+            if (!verifyResponse.ok) {
+              throw new Error('Payment verification failed');
             }
-            toast.success('Payment successful and user data saved!');
-            onSubmit(data);
-            // Redirect to Thank You page
+
+            // Save user data only after payment verification
+            await onSubmit({
+              ...data,
+              paymentId: response.razorpay_payment_id,
+              orderId: response.razorpay_order_id
+            });
+
             navigate('/thank-you');
           } catch (error) {
-            console.error('Error saving user data after payment:', error);
-            toast.error('Payment succeeded but error occurred saving user data.');
-          } finally {
-            setSubmitting(false);
+            console.error('Payment verification failed:', error);
+            navigate('/payment-failed');
           }
         },
         prefill: {
-          email: data.email,
           name: data.fullName,
+          email: data.email,
+          contact: data.whatsappNumber
+        },
+        modal: {
+          ondismiss: function() {
+            setSubmitting(false);
+            navigate('/payment-cancelled');
+          }
         },
         theme: {
-          color: '#3399cc'
+          color: "#4338CA"
         }
       };
 
-      const paymentObject = new (window as any).Razorpay(options);
-      paymentObject.open();
+      const razorpay = new (window as any).Razorpay(options);
+      razorpay.open();
 
     } catch (error) {
       console.error('Error processing payment:', error);
@@ -123,7 +126,6 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
   return (
     <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* FULL NAME */}
         <div>
           <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">Full Name*</label>
           <input
@@ -135,7 +137,6 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
           {errors.fullName && <p className="text-red-600 text-sm">{errors.fullName.message}</p>}
         </div>
 
-        {/* EMAIL */}
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email*</label>
           <input
@@ -153,7 +154,6 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
           {errors.email && <p className="text-red-600 text-sm">{errors.email.message}</p>}
         </div>
 
-        {/* WHATSAPP NUMBER */}
         <div>
           <label htmlFor="whatsappNumber" className="block text-sm font-medium text-gray-700 mb-1">WhatsApp Number*</label>
           <input
@@ -171,7 +171,6 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
           {errors.whatsappNumber && <p className="text-red-600 text-sm">{errors.whatsappNumber.message}</p>}
         </div>
 
-        {/* DATE OF BIRTH */}
         <div>
           <label htmlFor="dateOfBirth" className="block text-sm font-medium text-gray-700 mb-1">Date of Birth*</label>
           <Controller
@@ -194,7 +193,6 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
           {errors.dateOfBirth && <p className="text-red-600 text-sm">{errors.dateOfBirth.message}</p>}
         </div>
 
-        {/* TIME OF BIRTH */}
         <div>
           <label htmlFor="timeOfBirth" className="block text-sm font-medium text-gray-700 mb-1">Time of Birth* (HH:MM)</label>
           <input
@@ -207,7 +205,6 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
           {timeError && <p className="text-red-600 text-sm">{timeError}</p>}
         </div>
 
-        {/* GENDER */}
         <div>
           <label htmlFor="gender" className="block text-sm font-medium text-gray-700 mb-1">Gender*</label>
           <select
@@ -223,14 +220,12 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
           {errors.gender && <p className="text-red-600 text-sm">{errors.gender.message}</p>}
         </div>
 
-        {/* REPORT LANGUAGE */}
         <div>
           <label htmlFor="reportLanguage" className="block text-sm font-medium text-gray-700 mb-1">Report Language</label>
           <input type="hidden" value="English" {...register('reportLanguage', { required: 'Report language is required' })} />
           <p className="px-4 py-2 bg-gray-100 border rounded-md">English</p>
         </div>
 
-        {/* CHALLENGE */}
         <div className="md:col-span-2">
           <label htmlFor="currentChallenge" className="block text-sm font-medium text-gray-700 mb-1">Current Challenge (optional)</label>
           <textarea
@@ -241,7 +236,6 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
           />
         </div>
 
-        {/* PLACE OF BIRTH */}
         <div>
           <label htmlFor="placeOfBirth" className="block text-sm font-medium text-gray-700 mb-1">Place of Birth – City*</label>
           <input
@@ -253,7 +247,6 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
           {errors.placeOfBirth && <p className="text-red-600 text-sm">{errors.placeOfBirth.message}</p>}
         </div>
 
-        {/* STATE */}
         <div>
           <label htmlFor="state" className="block text-sm font-medium text-gray-700 mb-1">State*</label>
           <input
@@ -265,7 +258,6 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
           {errors.state && <p className="text-red-600 text-sm">{errors.state.message}</p>}
         </div>
 
-        {/* PINCODE */}
         <div>
           <label htmlFor="pincode" className="block text-sm font-medium text-gray-700 mb-1">Pincode*</label>
           <input
@@ -284,7 +276,6 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
         </div>
       </div>
 
-      {/* SUBMIT BUTTON */}
       <div className="flex justify-center mt-8">
         <button
           type="submit"
@@ -295,7 +286,7 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
               : 'bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
           }`}
         >
-          {submitting ? 'Submitting...' : 'Proceed to Payment - ₹99'}
+          {submitting ? 'Processing...' : 'Proceed to Payment - ₹99'}
         </button>
       </div>
     </form>

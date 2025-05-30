@@ -5,12 +5,14 @@ export interface UserFormData {
   dateOfBirth: Date;
   timeOfBirth: string;
   gender: 'Male' | 'Female' | 'Other';
-  reportLanguage:string;
+  reportLanguage: string;
   currentChallenge?: string;
   placeOfBirth: string;
   state: string;
   pincode: string;
   createdAt?: Date;
+  paymentId?: string;
+  orderId?: string;
 }
 
 export interface ContactFormData {

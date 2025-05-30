@@ -1,68 +1,59 @@
 import express from 'express';
 import Razorpay from 'razorpay';
+import crypto from 'crypto';
 import { saveUserDataToRTDB } from './realtimeDB.js';
 
 const router = express.Router();
 
 const razorpay = new Razorpay({
-    key_id: process.env.RAZORPAY_KEY_ID,
-    key_secret: process.env.RAZORPAY_KEY_SECRET
+    key_id: process.env.VITE_RAZORPAY_KEY_ID,
+    key_secret: process.env.VITE_RAZORPAY_KEY_SECRET
 });
 
 router.post('/orders', async (req, res) => {
-    const options = {
-        amount: req.body.amount,
-        currency: "INR",
-        receipt: "receipt#1",
-        payment_capture: 1
-    };
     try {
-        const response = await razorpay.orders.create(options);
+        const options = {
+            amount: req.body.amount,
+            currency: "INR",
+            receipt: `receipt_${Date.now()}`,
+            payment_capture: 1
+        };
+        
+        const order = await razorpay.orders.create(options);
         res.json({
-            order_id: response.id,
-            currency: response.currency,
-            amount: response.amount
+            order_id: order.id,
+            currency: order.currency,
+            amount: order.amount
         });
     } catch (error) {
         console.error("Error creating order:", error);
-        if (error && error.message) {
-            console.error("Detailed error message:", error.message);
-        }
         res.status(500).json({ error: "Failed to create order" });
     }
 });
 
-router.get('/payment/:paymentId', async (req, res) => {
-    const { paymentId } = req.params;
-     try {
-        const payment = await razorpay.payments.fetch(paymentId);
-        if (!payment) {
-            return res.status(404).json({ error: "Payment not found" });
-        }
-        res.json({
-            status: payment.status,
-            method: payment.method,
-            amount: payment.amount,
-            currency: payment.currency
-        });
-    } catch (error) {
-        console.error("Error fetching payment:", error);
-        if (error.statusCode === 400 && error.error && error.error.code === 'BAD_REQUEST_ERROR') {
-            return res.status(404).json({ error: "Payment not found" });
-        }
-        res.status(500).json({ error: "Failed to fetch payment details" });
-    }
-});
+router.post('/verify', async (req, res) => {
+    try {
+        const {
+            razorpay_order_id,
+            razorpay_payment_id,
+            razorpay_signature
+        } = req.body;
 
-router.post('/saveUserData', async (req, res) => {
-  const userData = req.body;
-  try {
-    const userId = await saveUserDataToRTDB(userData);
-    res.status(200).json({ userId });
-  } catch (error) {
-    console.error('Error saving user data after payment:', error);
-    res.status(500).json({ error: 'Failed to save user data' });
-  }
+        const sign = razorpay_order_id + "|" + razorpay_payment_id;
+        const expectedSign = crypto
+            .createHmac("sha256", process.env.VITE_RAZORPAY_KEY_SECRET)
+            .update(sign.toString())
+            .digest("hex");
+
+        if (razorpay_signature === expectedSign) {
+            res.json({ verified: true });
+        } else {
+            res.status(400).json({ error: 'Invalid signature' });
+        }
+    } catch (error) {
+        console.error("Error verifying payment:", error);
+        res.status(500).json({ error: "Failed to verify payment" });
+    }
 });
 
 export default router;
