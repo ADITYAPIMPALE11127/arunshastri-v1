@@ -47,7 +47,7 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
 
       // Create order
       console.log('Creating Razorpay order...');
-      const orderResponse = await fetch('https://razorpay-service-piug.onrender.com/razorpay/orders', {
+      const orderResponse = await fetch('https://razor-pay-service.onrender.com/razorpay/orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
           try {
             // Verify payment
             console.log('Verifying payment...');
-            const verifyResponse = await fetch('https://razorpay-service-piug.onrender.com/razorpay/verify', {
+            const verifyResponse = await fetch('https://razor-pay-service.onrender.com/razorpay/verify', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
