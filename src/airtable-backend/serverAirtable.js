@@ -5,7 +5,7 @@ const cors = require('cors');
 const app = express();
 
 app.use(express.json());
-app.use(cors({ origin: 'http://localhost:5173' })); // Allow frontend origin
+app.use(cors({ origin: 'https://arunshashtri.com/' })); // Allow frontend origin
 
 console.log('AIRTABLE_PERSONAL_ACCESS_TOKEN:', process.env.AIRTABLE_PERSONAL_ACCESS_TOKEN ? 'Set' : 'Not set');
 console.log('AIRTABLE_BASE_ID:', process.env.AIRTABLE_BASE_ID);
