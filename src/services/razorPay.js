@@ -1,13 +1,13 @@
 import express from 'express';
 import Razorpay from 'razorpay';
 import crypto from 'crypto';
-import { saveUserDataToRTDB } from './realtimeDB.js';
+
 
 const router = express.Router();
 
 const razorpay = new Razorpay({
-    key_id: process.env.VITE_RAZORPAY_KEY_ID,
-    key_secret: process.env.VITE_RAZORPAY_KEY_SECRET
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET
 });
 
 router.post('/orders', async (req, res) => {
@@ -41,7 +41,7 @@ router.post('/verify', async (req, res) => {
 
         const sign = razorpay_order_id + "|" + razorpay_payment_id;
         const expectedSign = crypto
-            .createHmac("sha256", process.env.VITE_RAZORPAY_KEY_SECRET)
+            .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
             .update(sign.toString())
             .digest("hex");
 
