@@ -5,7 +5,20 @@ const cors = require('cors');
 const app = express();
 
 app.use(express.json());
-app.use(cors({ origin: 'https://arunshashtri.com/' })); // Allow frontend origin
+app.use(cors({
+  origin: function(origin, callback) {
+    if (!origin || origin === 'https://arunshashtri.com' || origin === 'https://arunshashtri.com/') {
+      callback(null, true);
+    } else {
+      // Allow origin with or without trailing slash
+      if (origin && origin.startsWith('https://arunshashtri.com')) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    }
+  }
+}));
 
 console.log('AIRTABLE_PERSONAL_ACCESS_TOKEN:', process.env.AIRTABLE_PERSONAL_ACCESS_TOKEN ? 'Set' : 'Not set');
 console.log('AIRTABLE_BASE_ID:', process.env.AIRTABLE_BASE_ID);
