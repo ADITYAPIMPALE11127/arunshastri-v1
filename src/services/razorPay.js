@@ -1,7 +1,7 @@
 import express from 'express';
 import Razorpay from 'razorpay';
 import crypto from 'crypto';
-import { saveUserDataToRTDB } from './realtimeDB.js';
+
 
 const router = express.Router();
 
