@@ -33,7 +33,7 @@ This project is a React-based web application built with Vite as the frontend bu
 1. Ensure environment variables are set in `.env` file for backend configuration.
 2. Start the backend server:
    ```bash
-   npm run start-server
+   node server.js
    ```
 3. The backend server will run on the port specified in the `.env` file or default to port 3000.
 
@@ -48,7 +48,7 @@ This project is a React-based web application built with Vite as the frontend bu
    ```
 3. Start the Airtable backend server:
    ```bash
-   npm start
+   node serverAirtable.js
    ```
 
 ## Project Structure and Navigation
