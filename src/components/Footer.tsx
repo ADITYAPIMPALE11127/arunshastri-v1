@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Award, Star } from 'lucide-react';
+import {Award, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Footer: React.FC = () => {
@@ -68,6 +68,11 @@ const Footer: React.FC = () => {
               <li>
                 <Link to="/faq" className="text-yellow-300 hover:underline">
                   Frequently Asked Questions
+                </Link>
+              </li>
+              <li>
+                <Link to="/license" className="text-yellow-300 hover:underline">
+                  License and Copyright Notice
                 </Link>
               </li>
             </ul>

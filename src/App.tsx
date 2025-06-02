@@ -10,6 +10,7 @@ import PaymentCancelledPage from './pages/PaymentCancelledPage';
 import AboutPage from './pages/AboutPage';
 import FAQPage from './pages/FAQPage';
 import ContactPage from './pages/ContactPage';
+import LicensePage from './pages/LicensePage';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/license" element={<LicensePage />} />
       </Routes>
     </Router>
   );
