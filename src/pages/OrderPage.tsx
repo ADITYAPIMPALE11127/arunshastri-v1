@@ -11,13 +11,13 @@ const OrderPage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleFormSubmit = async (formData: UserFormData) => {
-    console.log('OrderPage received form data:', formData);
+    // console.log('OrderPage received form data:', formData);
     setIsLoading(true);
     setError(null);
 
     try {
       // Save user data to Airtable via backend endpoint
-      console.log('Sending data to Airtable backend:', formData);
+      // console.log('Sending data to Airtable backend:', formData);
       const saveResponse = await fetch('https://air-table-web-service.onrender.com/api/save-to-airtable', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -40,13 +40,13 @@ const OrderPage: React.FC = () => {
 
       if (!saveResponse.ok) {
         const errorText = await saveResponse.text();
-        console.error('Airtable save failed:', errorText);
+        // console.error('Airtable save failed:', errorText);
         throw new Error('Failed to save data to Airtable');
       }
 
-      console.log('Airtable save successful:', await saveResponse.json());
+      // console.log('Airtable save successful:', await saveResponse.json());
     } catch (err) {
-      console.error('Error processing order:', err);
+      // console.error('Error processing order:', err);
       setError('There was an error saving your data. Please try again.');
       navigate('/payment-failed');
     } finally {

@@ -22,11 +22,11 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
   };
 
   const onFormSubmit = async (data: UserFormData) => {
-    console.log('Form submitted with data:', data);
+    // console.log('Form submitted with data:', data);
     const isTimeValid = validateTime(data.timeOfBirth);
     if (isTimeValid !== true) {
       setTimeError(isTimeValid);
-      console.error('Time validation failed:', isTimeValid);
+      // console.error('Time validation failed:', isTimeValid);
       return;
     }
 
@@ -35,7 +35,7 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
 
     try {
       // Load Razorpay SDK
-      console.log('Loading Razorpay SDK...');
+      // console.log('Loading Razorpay SDK...');
       const script = document.createElement('script');
       script.src = 'https://checkout.razorpay.com/v1/checkout.js';
       document.body.appendChild(script);
@@ -43,10 +43,10 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
       await new Promise((resolve) => {
         script.onload = resolve;
       });
-      console.log('Razorpay SDK loaded');
+      // console.log('Razorpay SDK loaded');
 
       // Create order
-      console.log('Creating Razorpay order...');
+      // console.log('Creating Razorpay order...');
       const orderResponse = await fetch('https://razor-pay-service.onrender.com/razorpay/orders', {
         method: 'POST',
         headers: {
@@ -57,12 +57,12 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
 
       if (!orderResponse.ok) {
         const errorText = await orderResponse.text();
-        console.error('Razorpay order creation failed:', errorText);
+        // console.error('Razorpay order creation failed:', errorText);
         throw new Error('Failed to create order');
       }
 
       const orderData = await orderResponse.json();
-      console.log('Razorpay order created:', orderData);
+      // console.log('Razorpay order created:', orderData);
 
       // Initialize Razorpay
       const options = {
@@ -73,10 +73,10 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
         description: 'Fortune Report Plus',
         order_id: orderData.order_id,
         handler: async function (response: any) {
-          console.log('Razorpay payment successful:', response);
+          // console.log('Razorpay payment successful:', response);
           try {
             // Verify payment
-            console.log('Verifying payment...');
+            // console.log('Verifying payment...');
             const verifyResponse = await fetch('https://razor-pay-service.onrender.com/razorpay/verify', {
               method: 'POST',
               headers: {
@@ -91,11 +91,11 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
 
             if (!verifyResponse.ok) {
               const errorText = await verifyResponse.text();
-              console.error('Payment verification failed:', errorText);
+              // console.error('Payment verification failed:', errorText);
               throw new Error('Payment verification failed');
             }
 
-            console.log('Payment verified successfully');
+            // console.log('Payment verified successfully');
             // Pass Date object to onSubmit
             const submitData: UserFormData = {
               ...data,
@@ -107,10 +107,10 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
             // Call onSubmit
             await onSubmit(submitData);
 
-            console.log('Navigating to /thank-you');
+            // console.log('Navigating to /thank-you');
             navigate('/thank-you');
           } catch (error) {
-            console.error('Payment verification or data saving failed:', error);
+            // console.error('Payment verification or data saving failed:', error);
             navigate('/payment-failed');
           }
         },
@@ -121,7 +121,7 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
         },
         modal: {
           ondismiss: function () {
-            console.log('Razorpay modal dismissed');
+            // console.log('Razorpay modal dismissed');
             setSubmitting(false);
             navigate('/payment-cancelled');
           },
@@ -131,11 +131,11 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
         },
       };
 
-      console.log('Opening Razorpay modal');
+      // console.log('Opening Razorpay modal');
       const razorpay = new (window as any).Razorpay(options);
       razorpay.open();
     } catch (error) {
-      console.error('Error processing payment:', error);
+      // console.error('Error processing payment:', error);
       toast.error('Failed to process payment. Please try again.');
       setSubmitting(false);
     }
