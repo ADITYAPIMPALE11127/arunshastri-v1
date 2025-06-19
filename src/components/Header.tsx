@@ -12,7 +12,7 @@ const Header: React.FC = () => {
         <div className="flex justify-between items-center">
 <Link to="/" className="flex items-center relative group">
   <span className="text-xl sm:text-2xl text-white font-semibold relative z-10 pr-2">
-    Arun
+      Arun
   </span>
 
   {/* Om symbol behind text in the center */}
@@ -21,7 +21,7 @@ const Header: React.FC = () => {
   </div>
 
   <span className="text-xl sm:text-2xl text-white font-semibold relative z-10 pl-2">
-    Shashtri
+   Shashtri
   </span>
 </Link>
 
