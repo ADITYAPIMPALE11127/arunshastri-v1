@@ -27,7 +27,11 @@ const HomePage: React.FC = () => {
 <p className="text-lg text-[#44233b] mb-10 max-w-2xl mx-auto">
   Created by award-winning astrologer Arun Shashtri to help you understand your true path.
 </p>
-
+    
+<p className="text-lg text-[#44233b] mb-10 max-w-2xl mx-auto">
+Numerology is the ancient science of numbers that reveals the blueprint of your life. From your birth date to the letters in your name — every number carries meaning.
+ </p>   
+    
 <Link
   to="/order"
   className="inline-block px-8 py-4 bg-[#a00]/70 text-white font-bold rounded-md hover:from-[#3e3611] hover:to-[#3e3611]/70 transition-colors text-lg shadow-md"
