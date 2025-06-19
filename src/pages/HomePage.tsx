@@ -33,8 +33,8 @@ const HomePage: React.FC = () => {
   className="inline-block px-8 py-4 bg-[#a00]/70 text-white font-bold rounded-md hover:from-[#3e3611] hover:to-[#3e3611]/70 transition-colors text-lg shadow-md"
 >
   <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
-    <span className="text-white-500 line-through text-base">₹299</span>
-    <span className="text-white text-xl font-extrabold">₹99/- Only</span>
+
+    <span className="text-white text-xl font-medium">₹99/- Only</span>
   </div>
 </Link>
 
@@ -82,10 +82,10 @@ const HomePage: React.FC = () => {
               <div className="md:w-1/2">
                 <div className="flex items-center mb-4 text-[#44233b]">
                   <Award className="h-8 w-8 text-yellow-500 mr-3" />
-                  <h2 className="text-3xl font-bold">About Astro Arun shashtri</h2>
+                  <h2 className="text-3xl font-bold">About Astro Arun Shashtri</h2>
                 </div>
                 <p className="text-[[#44233b]]-600 mb-6">
-                  With over 8 years of experience in Vedic astrology, Astro Arun Pandit has helped thousands of individuals navigate life's challenges through accurate astrological guidance.
+                  With over 8 years of experience in Vedic astrology, Astro Arun Shashtri has helped thousands of individuals navigate life's challenges through accurate astrological guidance.
                 </p>
                 <ul className="space-y-3 mb-8">
                   <li className="flex items-start">
@@ -110,8 +110,8 @@ const HomePage: React.FC = () => {
   className="inline-block px-8 py-4 bg-[#a00]/70 text-white font-bold rounded-md hover:from-[#3e3611] hover:to-[#3e3611]/70 transition-colors text-lg shadow-md"
 >
   <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
-    <span className="text-white-500 line-through text-base">₹299</span>
-    <span className="text-white text-xl font-extrabold">₹99/- Only</span>
+   
+    <span className="text-white text-xl font-medium">₹99/- Only</span>
   </div>
 </Link>
               </div>
