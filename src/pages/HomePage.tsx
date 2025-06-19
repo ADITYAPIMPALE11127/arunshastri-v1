@@ -12,32 +12,38 @@ const HomePage: React.FC = () => {
       <Header />
       
       <main className="flex-grow">
-        {/* Hero Section */}
-        <section className="bg-gradient-to-br from-indigo-900 via-purple-900 to-indigo-800 text-white py-20">
-          <div className="container mx-auto px-4 text-center">
-            <div className="flex justify-center mb-6">
-              <Star className="h-16 w-16 text-yellow-300" />
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Fortune Report Plus
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-              Decode Your Destiny with Astrology & Numerology
-            </p>
-            <p className="text-lg text-indigo-200 mb-10 max-w-2xl mx-auto">
-              Created by award-winning astrologer Arun Shashtri to help you understand your true path.
-            </p>
-            <Link
-              to="/order"
-              className="inline-block px-8 py-4 bg-yellow-500 text-indigo-900 font-bold rounded-md hover:bg-yellow-400 transition-colors text-lg"
-            >
-              Get Full Report – ₹99
-            </Link>
-          </div>
-        </section>
+{/* Hero Section */}
+<section className="bg-[#FDEBD0] text-white py-20">
+  <div className="container mx-auto px-4 text-center">
+    {/* <div className="flex justify-center mb-6">
+      <Star className="h-16 w-16 text-yellow-300" />
+    </div> */}
+<h1 className="text-4xl md:text-5xl font-[500] mb-4 text-[#44233b]">
+  Personalized Report
+</h1>
+<p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-[#44233b]">
+  Decode Your Destiny with Astrology & Numerology
+</p>
+<p className="text-lg text-[#44233b] mb-10 max-w-2xl mx-auto">
+  Created by award-winning astrologer Arun Shashtri to help you understand your true path.
+</p>
+
+<Link
+  to="/order"
+  className="inline-block px-8 py-4 bg-[#a00]/70 text-white font-bold rounded-md hover:from-[#3e3611] hover:to-[#3e3611]/70 transition-colors text-lg shadow-md"
+>
+  <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
+    <span className="text-white-500 line-through text-base">₹299</span>
+    <span className="text-white text-xl font-extrabold">₹99/- Only</span>
+  </div>
+</Link>
+
+  </div>
+</section>
+
 
         {/* Features Section */}
-        <section className="py-16 bg-indigo-50">
+        <section className="py-16 bg-[#FDEBD0]">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-12">Key Highlights of Your Fortune Report</h2>
             
@@ -62,7 +68,7 @@ const HomePage: React.FC = () => {
         </section>
 
         {/* About Astrologer Section */}
-        <section className="py-16">
+        <section className="py-16 bg-[#FDEBD0]">
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row items-center">
               <div className="md:w-1/2 mb-8 md:mb-0 md:pr-12">
@@ -74,11 +80,11 @@ const HomePage: React.FC = () => {
 
               </div>
               <div className="md:w-1/2">
-                <div className="flex items-center mb-4">
+                <div className="flex items-center mb-4 text-[#44233b]">
                   <Award className="h-8 w-8 text-yellow-500 mr-3" />
                   <h2 className="text-3xl font-bold">About Astro Arun shashtri</h2>
                 </div>
-                <p className="text-gray-600 mb-6">
+                <p className="text-[[#44233b]]-600 mb-6">
                   With over 8 years of experience in Vedic astrology, Astro Arun Pandit has helped thousands of individuals navigate life's challenges through accurate astrological guidance.
                 </p>
                 <ul className="space-y-3 mb-8">
@@ -99,19 +105,22 @@ const HomePage: React.FC = () => {
                     <span>Specializes in remedial astrology and life path guidance</span>
                   </li>
                 </ul>
-            <Link
-              to="/order"
-              className="inline-block px-6 py-3 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 transition-colors"
-            >
-              Get Your Personalized Report – ₹99
-            </Link>
+<Link
+  to="/order"
+  className="inline-block px-8 py-4 bg-[#a00]/70 text-white font-bold rounded-md hover:from-[#3e3611] hover:to-[#3e3611]/70 transition-colors text-lg shadow-md"
+>
+  <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
+    <span className="text-white-500 line-through text-base">₹299</span>
+    <span className="text-white text-xl font-extrabold">₹99/- Only</span>
+  </div>
+</Link>
               </div>
             </div>
           </div>
         </section>
 
         {/* Testimonials Section */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-[#FDEBD0] ">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-12">What Our Clients Say</h2>
             
@@ -142,18 +151,21 @@ const HomePage: React.FC = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="py-16 bg-indigo-900 text-white text-center">
+        <section className="py-16 bg-[#FDEBD0] text-[#44233b] text-center">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold mb-6">Ready to Discover Your Cosmic Blueprint?</h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto">
               Get your personalized Fortune Report Plus today and unlock the secrets written in your stars.
             </p>
-            <Link
-              to="/order"
-              className="inline-block px-8 py-4 bg-yellow-500 text-indigo-900 font-bold rounded-md hover:bg-yellow-400 transition-colors text-lg"
-            >
-              Get Full Report – ₹99
-            </Link>
+<Link
+  to="/order"
+  className="inline-block px-8 py-4 bg-[#a00]/70 text-white font-bold rounded-md hover:from-[#3e3611] hover:to-[#3e3611]/70 transition-colors text-lg shadow-md"
+>
+  <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
+    <span className="text-white-500 line-through text-base">₹299</span>
+    <span className="text-white text-xl font-extrabold">₹99/- Only</span>
+  </div>
+</Link>
           </div>
         </section>
       </main>

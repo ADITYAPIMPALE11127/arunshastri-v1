@@ -72,7 +72,7 @@ const FAQPage: React.FC = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       
-      <main className="flex-grow py-12 bg-gray-50">
+      <main className="flex-grow py-12 bg-[#FDEBD0] text-[#44233b]">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h1 className="text-3xl font-bold mb-8 text-center">Frequently Asked Questions</h1>
@@ -133,7 +133,7 @@ const FAQPage: React.FC = () => {
               <p className="text-lg mb-4">Still have questions?</p>
               <a 
                 href="mailto:support@astroarunpandit.org" 
-                className="inline-block px-6 py-3 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 transition-colors"
+                className="inline-block px-6 py-3 bg-[#db4242] text-white font-medium rounded-md hover:bg-indigo-700 transition-colors"
               >
                 Contact Support
               </a>

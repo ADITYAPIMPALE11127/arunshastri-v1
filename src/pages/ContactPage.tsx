@@ -42,7 +42,7 @@ const ContactPage: React.FC = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       
-      <main className="flex-grow bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <main className="flex-grow bg-[#FDEBD0] py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
           <div className="bg-white rounded-lg shadow-md p-8">
             <h1 className="text-3xl font-bold text-gray-900 mb-6 text-center">Contact Us</h1>
@@ -93,17 +93,18 @@ const ContactPage: React.FC = () => {
                 />
               </div>
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
-                  isSubmitting
-                    ? 'bg-gray-400 cursor-not-allowed'
-                    : 'bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-                }`}
-              >
-                {isSubmitting ? 'Sending...' : 'Send Message'}
-              </button>
+<button
+  type="submit"
+  disabled={isSubmitting}
+  className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
+    isSubmitting
+      ? 'bg-gray-400 cursor-not-allowed'
+      : 'bg-[#db4242] hover:bg-[#c43737] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#db4242]'
+  }`}
+>
+  {isSubmitting ? 'Sending...' : 'Send Message'}
+</button>
+
             </form>
           </div>
         </div>

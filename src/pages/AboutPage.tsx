@@ -1,5 +1,5 @@
 import React from 'react';
-import { Award, Star, BookOpen, Users } from 'lucide-react';
+import { Award, BookOpen, Users } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import zodiacSignsImg from '../../assets/zodiac-signs.jpg';
@@ -38,62 +38,62 @@ const AboutPage: React.FC = () => {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-              <div className="bg-indigo-50 p-6 rounded-lg">
+              <div className="bg-[#FDEBD0] p-6 rounded-lg">
                 <div className="flex items-center mb-4">
                   <Award className="h-6 w-6 text-indigo-600 mr-3" />
                   <h2 className="text-xl font-semibold">Credentials & Awards</h2>
                 </div>
                 <ul className="space-y-2">
                   <li className="flex items-start">
-                    <Star className="h-5 w-5 text-yellow-500 mr-2 mt-1 flex-shrink-0" />
+
                     <span>Gold Medalist in Jyotish Shastra</span>
                   </li>
                   <li className="flex items-start">
-                    <Star className="h-5 w-5 text-yellow-500 mr-2 mt-1 flex-shrink-0" />
+
                     <span>Certified by the Indian Council of Astrological Sciences</span>
                   </li>
                   <li className="flex items-start">
-                    <Star className="h-5 w-5 text-yellow-500 mr-2 mt-1 flex-shrink-0" />
+
                     <span>Recipient of the "Best Astrologer" award in 2022</span>
                   </li>
                   <li className="flex items-start">
-                    <Star className="h-5 w-5 text-yellow-500 mr-2 mt-1 flex-shrink-0" />
+
                     <span>Featured in leading publications for accurate predictions</span>
                   </li>
                 </ul>
               </div>
               
-              <div className="bg-indigo-50 p-6 rounded-lg">
+              <div className="bg-[#FDEBD0] p-6 rounded-lg">
                 <div className="flex items-center mb-4">
                   <BookOpen className="h-6 w-6 text-indigo-600 mr-3" />
                   <h2 className="text-xl font-semibold">Specializations</h2>
                 </div>
                 <ul className="space-y-2">
                   <li className="flex items-start">
-                    <Star className="h-5 w-5 text-yellow-500 mr-2 mt-1 flex-shrink-0" />
+
                     <span>Career and Business Astrology</span>
                   </li>
                   <li className="flex items-start">
-                    <Star className="h-5 w-5 text-yellow-500 mr-2 mt-1 flex-shrink-0" />
+
                     <span>Relationship Compatibility Analysis</span>
                   </li>
                   <li className="flex items-start">
-                    <Star className="h-5 w-5 text-yellow-500 mr-2 mt-1 flex-shrink-0" />
+
                     <span>Remedial Astrology (Gemstones, Mantras, Yantras)</span>
                   </li>
                   <li className="flex items-start">
-                    <Star className="h-5 w-5 text-yellow-500 mr-2 mt-1 flex-shrink-0" />
+
                     <span>Medical Astrology and Health Analysis</span>
                   </li>
                   <li className="flex items-start">
-                    <Star className="h-5 w-5 text-yellow-500 mr-2 mt-1 flex-shrink-0" />
+
                     <span>Muhurta (Electional Astrology)</span>
                   </li>
                 </ul>
               </div>
             </div>
             
-            <div className="bg-indigo-900 text-white p-8 rounded-lg mb-12">
+            <div className="bg-[#FDEBD0] text-[#44233b] p-8 rounded-lg mb-12">
               <div className="flex items-center mb-6">
                 <Users className="h-8 w-8 text-yellow-300 mr-4" />
                 <h2 className="text-2xl font-bold">Our Mission</h2>

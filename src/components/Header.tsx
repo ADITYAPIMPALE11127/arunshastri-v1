@@ -1,99 +1,58 @@
 import React, { useState } from 'react';
-import { Star, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import omSvg from '../../assets/om-svgrepo-com.svg';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="bg-indigo-900 text-white">
-      <div className="container mx-auto px-4 py-4">
+    <header className="bg-[#5B2340] text-[#fd8f8f]">
+      <div className="container mx-auto px-4 py-6">
         <div className="flex justify-between items-center">
-          <Link to="/" className="flex items-center space-x-2">
-            <Star className="h-6 w-6 sm:h-8 sm:w-8 text-yellow-300" />
-            <span className="text-xl sm:text-2xl font-bold">ArunShashtri</span>
-          </Link>
+<Link to="/" className="flex items-center relative group">
+  <span className="text-xl sm:text-2xl text-white font-semibold relative z-10 pr-2">
+    Arun
+  </span>
 
-          {/* Mobile menu button */}
+  {/* Om symbol behind text in the center */}
+  <div className="absolute left-1/2 transform -translate-x-1/2 w-[50px] h-[50px] opacity-30 group-hover:opacity-40 z-0">
+    <img src={omSvg} alt="Om" className="w-full h-full" />
+  </div>
+
+  <span className="text-xl sm:text-2xl text-white font-semibold relative z-10 pl-2">
+    Shashtri
+  </span>
+</Link>
+
+
+          {/* Rest of your header code remains unchanged */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="md:hidden p-2"
             aria-label="Toggle menu"
           >
-            {isMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
+            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
 
-          {/* Desktop navigation */}
           <nav className="hidden md:block">
             <ul className="flex space-x-6">
-              <li>
-                <Link to="/" className="hover:text-yellow-300 transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="hover:text-yellow-300 transition-colors">
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link to="/faq" className="hover:text-yellow-300 transition-colors">
-                  FAQs
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="hover:text-yellow-300 transition-colors">
-                  Contact
-                </Link>
-              </li>
+              <li><Link to="/" className="hover:text-yellow-300 transition-colors">Home</Link></li>
+              <li><Link to="/about" className="hover:text-yellow-300 transition-colors">About</Link></li>
+              <li><Link to="/faq" className="hover:text-yellow-300 transition-colors">FAQs</Link></li>
+              <li><Link to="/contact" className="hover:text-yellow-300 transition-colors">Contact</Link></li>
             </ul>
           </nav>
         </div>
 
-        {/* Mobile navigation */}
+        {/* Mobile navigation remains unchanged */}
         {isMenuOpen && (
           <nav className="md:hidden mt-4 pb-4">
             <ul className="flex flex-col space-y-4">
-              <li>
-                <Link 
-                  to="/" 
-                  className="block hover:text-yellow-300 transition-colors py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/about" 
-                  className="block hover:text-yellow-300 transition-colors py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/faq" 
-                  className="block hover:text-yellow-300 transition-colors py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  FAQs
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/contact" 
-                  className="block hover:text-yellow-300 transition-colors py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Contact
-                </Link>
-              </li>
+              <li><Link to="/" className="block hover:text-yellow-300 transition-colors py-2" onClick={() => setIsMenuOpen(false)}>Home</Link></li>
+              <li><Link to="/about" className="block hover:text-yellow-300 transition-colors py-2" onClick={() => setIsMenuOpen(false)}>About</Link></li>
+              <li><Link to="/faq" className="block hover:text-yellow-300 transition-colors py-2" onClick={() => setIsMenuOpen(false)}>FAQs</Link></li>
+              <li><Link to="/contact" className="block hover:text-yellow-300 transition-colors py-2" onClick={() => setIsMenuOpen(false)}>Contact</Link></li>
             </ul>
           </nav>
         )}
