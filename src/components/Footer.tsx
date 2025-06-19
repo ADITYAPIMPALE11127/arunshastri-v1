@@ -62,7 +62,6 @@ const Footer: React.FC = () => {
               <li>
                 <Link to="/contact" className="text-black-300 hover:underline">Contact Us</Link>
                 <p className="text-xs sm:text-sm mt-1">Email: support@arunshashtri.com</p>
-                <p className="text-xs sm:text-sm">Mobile No: +91 83903 10884</p>
               </li>
               <li>
                 <Link to="/faq" className="text-black-300 hover:underline">
