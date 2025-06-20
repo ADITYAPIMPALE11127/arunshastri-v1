@@ -24,7 +24,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-2 text-sm sm:text-base text-black-200">
               <li>Award-winning astrologer</li>
               <li>8+ years of experience</li>
-              <li>Jyothish Shashtri</li>
+              <li>Jyothish Hello</li>
               <li>Gold Medalist</li>
             </ul>
           </div>
