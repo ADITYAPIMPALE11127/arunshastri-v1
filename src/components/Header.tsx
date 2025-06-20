@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import omSvg from '../../assets/om-svgrepo-com.svg';
@@ -6,7 +6,7 @@ import omSvg from '../../assets/om-svgrepo-com.svg';
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-// Add Meta Pixel with useEffect
+  // Add Meta Pixel with useEffect
   useEffect(() => {
     // Load Meta Pixel
     !(function (f: any, b, e, v, n?, t?, s?) {
@@ -40,23 +40,21 @@ const Header: React.FC = () => {
     <header className="bg-[#5B2340] text-[#fd8f8f]">
       <div className="container mx-auto px-4 py-6">
         <div className="flex justify-between items-center">
-<Link to="/" className="flex items-center relative group">
-  <span className="text-xl sm:text-2xl text-white font-semibold relative z-10 pr-2">
-      Arun
-  </span>
+          <Link to="/" className="flex items-center relative group">
+            <span className="text-xl sm:text-2xl text-white font-semibold relative z-10 pr-2">
+              Arun
+            </span>
 
-  {/* Om symbol behind text in the center */}
-  <div className="absolute left-1/2 transform -translate-x-1/2 w-[50px] h-[50px] opacity-30 group-hover:opacity-40 z-0">
-    <img src={omSvg} alt="Om" className="w-full h-full" />
-  </div>
+            {/* Om symbol behind text in the center */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 w-[50px] h-[50px] opacity-30 group-hover:opacity-40 z-0">
+              <img src={omSvg} alt="Om" className="w-full h-full" />
+            </div>
 
-  <span className="text-xl sm:text-2xl text-white font-semibold relative z-10 pl-2">
-   Shashtri
-  </span>
-</Link>
+            <span className="text-xl sm:text-2xl text-white font-semibold relative z-10 pl-2">
+              Shashtri
+            </span>
+          </Link>
 
-
-          {/* Rest of your header code remains unchanged */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="md:hidden p-2"
@@ -75,7 +73,6 @@ const Header: React.FC = () => {
           </nav>
         </div>
 
-        {/* Mobile navigation remains unchanged */}
         {isMenuOpen && (
           <nav className="md:hidden mt-4 pb-4">
             <ul className="flex flex-col space-y-4">
@@ -87,7 +84,7 @@ const Header: React.FC = () => {
           </nav>
         )}
       </div>
-      <!-- Meta Pixel Code -->
+      {/* Meta Pixel Code */}
     </header>
   );
 };
