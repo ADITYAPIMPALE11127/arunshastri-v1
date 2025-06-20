@@ -20,11 +20,9 @@ This project is a React-based web application built with Vite as the frontend bu
    ```
 3. Open your browser and navigate to `http://localhost:5173` (default Vite port) to view the app.
 
-4. To build the production version:
-   ```bash
-   npm run build
+
    ```
-5. To preview the production build locally:
+4. To preview the production build locally:
    ```bash
    npm run preview
    ```
