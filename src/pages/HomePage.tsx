@@ -29,7 +29,7 @@ const HomePage: React.FC = () => {
 </p>
     
 <p className="text-lg text-[#44233b] mb-10 max-w-2xl mx-auto">
-Numerology is the ancient science of numbers that reveals the blueprint of your life. From your birth-date to the letters in your name, every number carries meaning.
+Numerology is the ancient science of numbers that reveals the blueprint of your life.
  </p>   
     
 <Link
