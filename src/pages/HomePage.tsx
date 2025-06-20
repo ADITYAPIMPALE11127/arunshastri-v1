@@ -166,7 +166,6 @@ Numerology is the ancient science of numbers that reveals the blueprint of your 
   className="inline-block px-8 py-4 bg-[#a00]/70 text-white font-bold rounded-md hover:from-[#3e3611] hover:to-[#3e3611]/70 transition-colors text-lg shadow-md"
 >
   <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
-    <span className="text-white-500 line-through text-base">₹299</span>
     <span className="text-white text-xl font-extrabold">₹99/- Only</span>
   </div>
 </Link>
