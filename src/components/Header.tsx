@@ -6,6 +6,36 @@ import omSvg from '../../assets/om-svgrepo-com.svg';
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+// Add Meta Pixel with useEffect
+  useEffect(() => {
+    // Load Meta Pixel
+    !(function (f: any, b, e, v, n?, t?, s?) {
+      if (f.fbq) return;
+      n = f.fbq = function () {
+        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+      };
+      if (!f._fbq) f._fbq = n;
+      n.push = n;
+      n.loaded = true;
+      n.version = '2.0';
+      n.queue = [];
+      t = b.createElement(e);
+      t.async = true;
+      t.src = v;
+      s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s);
+    })(
+      window,
+      document,
+      'script',
+      'https://connect.facebook.net/en_US/fbevents.js'
+    );
+
+    // Initialize Pixel with your actual ID
+    fbq('init', '4136037990012631');
+    fbq('track', 'PageView');
+  }, []);
+
   return (
     <header className="bg-[#5B2340] text-[#fd8f8f]">
       <div className="container mx-auto px-4 py-6">
