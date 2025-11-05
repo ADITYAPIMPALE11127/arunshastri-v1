@@ -38,7 +38,7 @@ const ThankYouPage: React.FC = () => {
                 <div className="text-left">
                   <p className="font-medium">Preparation of your report</p>
                   <p className="text-gray-600">
-                    Astro Arun Pandit will personally analyze your birth details and prepare your comprehensive Fortune Report.
+                    Astro Arun Shashtri will personally analyze your birth details and prepare your comprehensive Fortune Report.
                   </p>
                 </div>
               </div>
